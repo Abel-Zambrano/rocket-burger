@@ -20,7 +20,7 @@ const BuildControls = (props) => {
                     remove={() => props.remove(ingr.type)}
                     disabled={props.disabled[ingr.type]} />
             ))}
-            <h5>Price: ${props.price}</h5>
+            <h5>Price: ${props.price.toFixed(2)}</h5>
         </div>
     );
 };
