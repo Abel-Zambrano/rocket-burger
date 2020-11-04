@@ -69,7 +69,8 @@ const BurgerBuilder = () => {
             <BuildControls 
                 add={addIngredientHandler} 
                 remove={removeIngredientHandler}
-                disabled={disabledButton} />
+                disabled={disabledButton}
+                price={price} />
         </>
     );
 }
