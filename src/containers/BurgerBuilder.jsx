@@ -36,14 +36,40 @@ const BurgerBuilder = () => {
     };
 
     const removeIngredientHandler = (type) => {
-
+        const oldCount = ingredients[type];
+        if ( oldCount === 0) {
+            console.log(oldCount);
+            return;    
+        }
+        const updatedCount = oldCount - 1;
+        const updatedIngredients = {
+            ...ingredients
+        };
+        updatedIngredients[type] = updatedCount;
+        const deductPrice = INGREDIENT_PRICES[type];
+        const oldPrice = price;
+        const newPrice = oldPrice - deductPrice;
+        setPrice(newPrice);
+        setIngredients(updatedIngredients);
     };
+
+    const disabledButton = {
+        ...ingredients
+    };
+    for (let value in disabledButton) {
+        disabledButton[value] = disabledButton[value] <= 0
+        console.log(disabledButton);    
+    }
 
     //Render ===================================================================
     return (
+        
         <>
             <Burger ingredients={ingredients} />
-            <BuildControls add={addIngredientHandler} />
+            <BuildControls 
+                add={addIngredientHandler} 
+                remove={removeIngredientHandler}
+                disabled={disabledButton} />
         </>
     );
 }
