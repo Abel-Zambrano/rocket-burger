@@ -4,9 +4,9 @@ import Burger from '../components/Burger/Burger';
 const BurgerBuilder = () => {
     const [ ingredients, setIngredients ] = useState({
         lettuce: 1,
-        bacon: 1,
-        cheese: 2,
-        meat: 2
+        bacon: 0,
+        cheese: 4,
+        meat: 1
     });
 
     return (
