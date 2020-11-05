@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
+import Modal from '../components/UI/Modal/Modal';
+import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     lettuce: 0.99,
@@ -32,7 +34,7 @@ const BurgerBuilder = () => {
         setCheckout(sum > 0); // Boolean
 
     }
-
+    
     // Handlers ================================================================
     const addIngredientHandler = (type) => {
         const oldCount = ingredients[type];
@@ -79,6 +81,9 @@ const BurgerBuilder = () => {
     return (
         
         <>
+            <Modal>
+                <OrderSummary ingredients={ingredients} />
+            </Modal>
             <Burger ingredients={ingredients} />
             <BuildControls 
                 add={addIngredientHandler} 
