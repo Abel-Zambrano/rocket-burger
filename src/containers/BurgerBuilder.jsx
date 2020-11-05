@@ -11,7 +11,8 @@ const INGREDIENT_PRICES = {
 
 const BurgerBuilder = () => {
     // State =================================================================
-    const [ price, setPrice ] = useState(5)
+    const [ price, setPrice ] = useState(5);
+    const [ checkout, setCheckout ] = useState(false);
     const [ ingredients, setIngredients ] = useState({
         lettuce: 0,
         bacon: 0,
@@ -19,6 +20,19 @@ const BurgerBuilder = () => {
         meat: 0
     }  
     );
+
+    const updateCheckoutState = (newIngredients) => {
+        const sum = Object.keys(newIngredients)
+            .map(igKey => {
+                return newIngredients[igKey];
+            })
+            .reduce((sum, el) => {
+                return sum + el;
+            }, 0);
+        setCheckout(sum > 0); // Boolean
+
+    }
+
     // Handlers ================================================================
     const addIngredientHandler = (type) => {
         const oldCount = ingredients[type];
@@ -32,7 +46,7 @@ const BurgerBuilder = () => {
         const newPrice = oldPrice + addPrice;
         setPrice(newPrice);
         setIngredients(updatedIngredients);
-
+        updateCheckoutState(updatedIngredients);
     };
 
     const removeIngredientHandler = (type) => {
@@ -51,6 +65,7 @@ const BurgerBuilder = () => {
         const newPrice = oldPrice - deductPrice;
         setPrice(newPrice);
         setIngredients(updatedIngredients);
+        updateCheckoutState(updatedIngredients);
     };
 
     const disabledButton = {
@@ -58,9 +73,8 @@ const BurgerBuilder = () => {
     };
     for (let value in disabledButton) {
         disabledButton[value] = disabledButton[value] <= 0
-        console.log(disabledButton);    
     }
-
+    
     //Render ===================================================================
     return (
         
@@ -70,6 +84,7 @@ const BurgerBuilder = () => {
                 add={addIngredientHandler} 
                 remove={removeIngredientHandler}
                 disabled={disabledButton}
+                purchase={checkout}
                 price={price} />
         </>
     );
