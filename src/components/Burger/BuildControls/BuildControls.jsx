@@ -23,7 +23,8 @@ const BuildControls = (props) => {
             <h5>Price: ${props.price.toFixed(2)}</h5>
             <button 
                 className='OrderButton' 
-                disabled={!props.purchase} >Add to Cart</button>
+                disabled={!props.purchase} 
+                onClick={props.checkout}>Add to Cart</button>
         </div>
     );
 };

@@ -15,6 +15,7 @@ const BurgerBuilder = () => {
     // State =================================================================
     const [ price, setPrice ] = useState(5);
     const [ checkout, setCheckout ] = useState(false);
+    const [ purchasing, setPurchasing ] = useState(false);
     const [ ingredients, setIngredients ] = useState({
         lettuce: 0,
         bacon: 0,
@@ -70,6 +71,10 @@ const BurgerBuilder = () => {
         updateCheckoutState(updatedIngredients);
     };
 
+    const purchasingHandler = () => {
+        setPurchasing(true);
+    }
+
     const disabledButton = {
         ...ingredients
     };
@@ -81,7 +86,7 @@ const BurgerBuilder = () => {
     return (
         
         <>
-            <Modal>
+            <Modal show={purchasing}>
                 <OrderSummary ingredients={ingredients} />
             </Modal>
             <Burger ingredients={ingredients} />
@@ -90,6 +95,7 @@ const BurgerBuilder = () => {
                 remove={removeIngredientHandler}
                 disabled={disabledButton}
                 purchase={checkout}
+                checkout={purchasingHandler}
                 price={price} />
         </>
     );
