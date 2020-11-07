@@ -1,15 +1,4 @@
 .Logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 8rem;
-}
-
-.Logo img {
     height: 36px;
     margin-right: 10px;
-}
-
-.title {
-    font-family: 'Orbitron', sans-serif;
 }

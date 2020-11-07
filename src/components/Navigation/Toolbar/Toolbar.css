@@ -17,3 +17,10 @@
 .Toolbar nav {
     height: 100%;
 }
+
+.Brand {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin-left: 8rem;
+}
