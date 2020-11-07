@@ -11,6 +11,13 @@
     transition: transform 0.3s ease-out;
 }
 
+.SideDrawerBrand {
+    display: flex;
+    font-size: 8px;
+    height: 80%;
+    box-sizing: border-box;
+}
+
 @media (min-width: 500px) {
     .SideDrawer {
         display: none;
