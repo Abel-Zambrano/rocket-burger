@@ -20,6 +20,7 @@
 
 .Brand {
     display: flex;
+    flex-flow: row;
     align-items: center;
     box-sizing: border-box;
     margin-left: 8rem;
@@ -27,4 +28,11 @@
 
 .Logo {
     margin-right: 10px;
+}
+
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
+    
 }

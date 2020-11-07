@@ -12,7 +12,9 @@ const Toolbar = () => {
                 <Logo />
                 <Title />
             </div>
-            <NavigationItems />
+            <nav className='DesktopOnly'>
+                <NavigationItems />
+            </nav>
         </header>
     );
 };
