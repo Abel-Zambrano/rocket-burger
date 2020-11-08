@@ -23,7 +23,7 @@
     flex-flow: row;
     align-items: center;
     box-sizing: border-box;
-    margin-left: 8rem;
+    margin-left: 4rem;
 }
 
 .Logo {
@@ -34,5 +34,13 @@
     .DesktopOnly {
         display: none;
     }
-    
+
+    .Brand {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        box-sizing: border-box;
+        margin-left: 0;
+        font-size: 8px;
+    }
 }
