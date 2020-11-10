@@ -4,6 +4,7 @@ import BuildControls from '../components/Burger/BuildControls/BuildControls';
 import Modal from '../components/UI/Modal/Modal';
 import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
 import axios from '../axios-orders';
+import Spinner from '../components/UI/Spinner';
 
 const INGREDIENT_PRICES = {
     lettuce: 0.99,
@@ -17,6 +18,7 @@ const BurgerBuilder = () => {
     const [ price, setPrice ] = useState(5);
     const [ checkout, setCheckout ] = useState(false);
     const [ purchasing, setPurchasing ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
     const [ ingredients, setIngredients ] = useState({
         lettuce: 0,
         bacon: 0,
@@ -82,6 +84,7 @@ const BurgerBuilder = () => {
 
     const purchaseContinueHandler = () => {
         // alert('Enjoy your burger!!')
+        setLoading(true);
         const order = {
             ingredients: ingredients,
             price: price,
@@ -100,8 +103,14 @@ const BurgerBuilder = () => {
         }
         // .json endpoint for firebase
         axios.post('/orders.json', order) 
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+            .then(res => {
+                setLoading(false)
+                setPurchasing(false)
+            })
+            .catch(err => {
+                setLoading(false)
+                setPurchasing(false)
+            });
     }
 
     const disabledButton = {
@@ -110,17 +119,22 @@ const BurgerBuilder = () => {
     for (let value in disabledButton) {
         disabledButton[value] = disabledButton[value] <= 0
     }
-    
+
+    let orderSummary = <OrderSummary 
+        ingredients={ingredients} 
+        modalCancel={purchaseCancelHandler}
+        continue={purchaseContinueHandler}
+        total={price}/>;
+    if (loading) {
+        orderSummary = <Spinner />
+    }
+        
     //Render ===================================================================
     return (
         
         <>
             <Modal show={purchasing} modalCancel={purchaseCancelHandler}>
-                    <OrderSummary 
-                        ingredients={ingredients} 
-                        modalCancel={purchaseCancelHandler}
-                        continue={purchaseContinueHandler}
-                        total={price}/>
+                {orderSummary}
             </Modal>
             <Burger ingredients={ingredients} />
             <BuildControls 
