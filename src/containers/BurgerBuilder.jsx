@@ -3,6 +3,7 @@ import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
 import Modal from '../components/UI/Modal/Modal';
 import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
+import axios from '../axios-orders';
 
 const INGREDIENT_PRICES = {
     lettuce: 0.99,
@@ -80,7 +81,27 @@ const BurgerBuilder = () => {
     }
 
     const purchaseContinueHandler = () => {
-        alert('Enjoy your burger!!')
+        // alert('Enjoy your burger!!')
+        const order = {
+            ingredients: ingredients,
+            price: price,
+            customer: {
+                name: 'Samuel Stone',
+                address: {
+                    street: '123 Willow Blvd',
+                    city: 'San Francisco',
+                    state: 'CA',
+                    zip: 94545,
+                },
+                email: 'samstone20@gmail.com',
+                delivery: 'no',
+                pickup: 'asap'
+            }
+        }
+        // .json endpoint for firebase
+        axios.post('/orders.json', order) 
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     }
 
     const disabledButton = {
