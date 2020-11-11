@@ -54,7 +54,6 @@ const BurgerBuilder = () => {
     const removeIngredientHandler = (type) => {
         const oldCount = ingredients[type];
         if ( oldCount === 0) {
-            console.log(oldCount);
             return;    
         }
         const updatedCount = oldCount - 1;
