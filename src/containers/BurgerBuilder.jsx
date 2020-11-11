@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
 import Modal from '../components/UI/Modal/Modal';
@@ -20,13 +20,7 @@ const BurgerBuilder = () => {
     const [ checkout, setCheckout ] = useState(false);
     const [ purchasing, setPurchasing ] = useState(false);
     const [ loading, setLoading ] = useState(false);
-    const [ ingredients, setIngredients ] = useState({
-        lettuce: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0
-    }  
-    );
+    const [ ingredients, setIngredients ] = useState(null);
 
     const updateCheckoutState = (newIngredients) => {
         const sum = Object.keys(newIngredients)
@@ -121,15 +115,41 @@ const BurgerBuilder = () => {
         disabledButton[value] = disabledButton[value] <= 0
     }
 
-    let orderSummary = <OrderSummary 
-        ingredients={ingredients} 
-        modalCancel={purchaseCancelHandler}
-        continue={purchaseContinueHandler}
-        total={price}/>;
+    let orderSummary = null;
+
+    useEffect(() => {
+        axios.get('https://rocket-burger-3f624.firebaseio.com/ingredients.json')
+            .then(res => {
+                setIngredients(res.data);
+            });
+    }, [])
+
+    let burger = <Spinner />
+
+    if(ingredients) {
+        burger = (
+            <>
+                <Burger ingredients={ingredients} />
+                <BuildControls 
+                    add={addIngredientHandler} 
+                    remove={removeIngredientHandler}
+                    disabled={disabledButton}
+                    purchase={checkout}
+                    checkout={purchasingHandler}
+                    price={price} />
+            </>
+        );
+        orderSummary = <OrderSummary 
+            ingredients={ingredients} 
+            modalCancel={purchaseCancelHandler}
+            continue={purchaseContinueHandler}
+            total={price}/>;
+    };
+
     if (loading) {
         orderSummary = <Spinner />
     }
-        
+     
     //Render ===================================================================
     return (
         
@@ -137,14 +157,7 @@ const BurgerBuilder = () => {
             <Modal show={purchasing} modalCancel={purchaseCancelHandler}>
                 {orderSummary}
             </Modal>
-            <Burger ingredients={ingredients} />
-            <BuildControls 
-                add={addIngredientHandler} 
-                remove={removeIngredientHandler}
-                disabled={disabledButton}
-                purchase={checkout}
-                checkout={purchasingHandler}
-                price={price} />
+            {burger}
         </>
     );
 }
