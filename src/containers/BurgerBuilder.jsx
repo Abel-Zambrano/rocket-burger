@@ -21,6 +21,7 @@ const BurgerBuilder = () => {
     const [ purchasing, setPurchasing ] = useState(false);
     const [ loading, setLoading ] = useState(false);
     const [ ingredients, setIngredients ] = useState(null);
+    const [ error, setError ] = useState(false);
 
     const updateCheckoutState = (newIngredients) => {
         const sum = Object.keys(newIngredients)
@@ -121,10 +122,16 @@ const BurgerBuilder = () => {
         axios.get('https://rocket-burger-3f624.firebaseio.com/ingredients.json')
             .then(res => {
                 setIngredients(res.data);
+            })
+            .catch(err => {
+                setError(true);
             });
     }, [])
 
-    let burger = <Spinner />
+    let burger = error ? 
+        <p style={{
+            marginTop: '10rem', 
+            textAlign: 'center'}}>Sorry something went wrong...</p> : <Spinner />;
 
     if(ingredients) {
         burger = (
