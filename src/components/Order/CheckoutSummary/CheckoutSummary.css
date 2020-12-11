@@ -36,3 +36,7 @@
 .Danger:hover {
     color: rgb(228, 122, 104);
 }
+
+.CheckoutButtons {
+    margin-bottom: 4rem;
+}
