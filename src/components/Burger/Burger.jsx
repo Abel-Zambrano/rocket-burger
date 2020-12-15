@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'; // Inject Match and History
 import './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
@@ -28,4 +29,4 @@ const Burger = (props) => {
     );
 };
 
-export default Burger;
+export default withRouter(Burger);

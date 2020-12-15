@@ -77,35 +77,36 @@ const BurgerBuilder = () => {
         setPurchasing(false);
     }
 
-    const purchaseContinueHandler = () => {
-        // alert('Enjoy your burger!!')
-        setLoading(true);
-        const order = {
-            ingredients: ingredients,
-            price: price,
-            customer: {
-                name: 'Samuel Stone',
-                address: {
-                    street: '123 Willow Blvd',
-                    city: 'San Francisco',
-                    state: 'CA',
-                    zip: 94545,
-                },
-                email: 'samstone20@gmail.com',
-                delivery: 'no',
-                pickup: 'asap'
-            }
-        }
-        // .json endpoint for firebase
-        axios.post('/orders.json', order) 
-            .then(res => {
-                setLoading(false)
-                setPurchasing(false)
-            })
-            .catch(err => {
-                setLoading(false)
-                setPurchasing(false)
-            });
+    const purchaseContinueHandler = (props) => {    
+        console.log(props);
+            
+        // setLoading(true);
+        // const order = {
+        //     ingredients: ingredients,
+        //     price: price,
+        //     customer: {
+        //         name: 'Samuel Stone',
+        //         address: {
+        //             street: '123 Willow Blvd',
+        //             city: 'San Francisco',
+        //             state: 'CA',
+        //             zip: 94545,
+        //         },
+        //         email: 'samstone20@gmail.com',
+        //         delivery: 'no',
+        //         pickup: 'asap'
+        //     }
+        // }
+        // // .json endpoint for firebase
+        // axios.post('/orders.json', order) 
+        //     .then(res => {
+        //         setLoading(false)
+        //         setPurchasing(false)
+        //     })
+        //     .catch(err => {
+        //         setLoading(false)
+        //         setPurchasing(false)
+        //     });
     }
 
     const disabledButton = {
@@ -117,7 +118,7 @@ const BurgerBuilder = () => {
 
     let orderSummary = null;
 
-    useEffect(() => {
+    useEffect((props) => {        
         axios.get('https://rocket-burger-3f624.firebaseio.com/ingredients.json')
             .then(res => {
                 setIngredients(res.data);
@@ -158,7 +159,6 @@ const BurgerBuilder = () => {
      
     //Render ===================================================================
     return (
-        
         <>
             <Modal show={purchasing} modalCancel={purchaseCancelHandler}>
                 {orderSummary}
